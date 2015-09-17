@@ -6,7 +6,7 @@ iconGood="<i class='fa fa-check-circle green'></i>"
 iconAlert="<i class='fa fa-times-circle red'></i>"
 iconWifi="<i class='fa fa-wifi'></i>"
 iconWorld="<i class='fa fa-globe'></i>"
-iconRoute="<i class='fa fa-sign-out blue'></i>"
+iconRoute=" <i class='fa fa-sign-out blue'></i>"
 
 publicIP=$(curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 
