@@ -1,10 +1,6 @@
-# This is a simple example Widget, written in CoffeeScript, to get you started
-# with Übersicht. For the full documentation please visit:
-#
-# https://github.com/felixhageloh/uebersicht
-#
-# You can modify this widget as you see fit, or simply delete this file to
-# remove it.
+# This script assumes that FontAwesome is available to it to display icons.
+# To enable FontAwesome, you can download a widget to enable it here:
+# https://gist.github.com/mapledyne/a89968f38dbc7e42948e
 
 # this is the shell command that gets executed every time this widget refreshes
 command: "network.widget/network.sh"
