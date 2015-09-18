@@ -8,12 +8,29 @@ iconWifi="<i class='fa fa-wifi'></i>"
 iconWorld="<i class='fa fa-globe'></i>"
 iconRoute=" <i class='fa fa-sign-out blue'></i>"
 
-publicIP=$(curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+#publicIP=$(curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+publicIP=$(curl -s http://icanhazip.com)
 
 # Uses the airport command line utility to get the current SSID
 currentNetwork=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | awk -F: '/ SSID: / {print $2}' | sed -e 's/SSID: //' | sed -e 's/ //')
 # If the current network does not match this, it will show as red text
-desiredNetwork="712-100"
+desiredNetwork=("PoohCorner" "712-100")
+
+array_contains() {
+    local array="$1[@]"
+    local seeking=$2
+    local in=1
+    for element in "${!array}"; do
+        if [[ $element == $seeking ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+
+array_contains desiredNetwork "${currentNetwork}" && safeNetwork=1 || safeNetwork=0
+
 
 wifiOrAirport=$(/usr/sbin/networksetup -listallnetworkservices | grep -Ei '(Wi-Fi|AirPort)')
 wirelessDevice=$(/usr/sbin/networksetup -listallhardwareports | awk "/$wifiOrAirport/,/Device/" | awk 'NR==2' | cut -d " " -f 2)
@@ -34,12 +51,12 @@ getWirelesstNetworkAndDisplayIp()
 #################################
 {
 # If the current network does not equal the desired network, then
-if [ "$currentNetwork" != "$desiredNetwork" ];then
-echo "<tr><td>$iconAlert $iconWifi Network SSID</td><td><span class='red'>$currentNetwork</span></td></tr>"
-echo "<tr><td>$iconAlert $iconWifi Wireless IP</td><td><span class='red'>$wirelessIP${wirelessIcon}</span></td></tr>"
+if [ "$safeNetwork" != "1" ];then
+echo "<tr><td><span class='red'>$iconWifi</span> Network SSID</td><td><span class='red'>$currentNetwork</span></td></tr>"
+echo "<tr><td><span class='red'>$iconWifi</span> Wireless IP</td><td><span class='red'>$wirelessIP${wirelessIcon}</span></td></tr>"
 else
-        echo "<tr><td>$iconGood $iconWifi Network SSID</td><td><span class='green'>$currentNetwork</span></td></tr>"
-echo "<tr><td class=good>$iconGood $iconWifi Wireless IP (en0)</td><td><span class='green'>$wirelessIP${wirelessIcon}</span></td></tr>"
+        echo "<tr><td><span class='green'>$iconWifi</span> Network SSID</td><td><span class='green'>$currentNetwork</span></td></tr>"
+echo "<tr><td class=good><span class='green'>$iconWifi</span> Wireless IP (en0)</td><td><span class='green'>$wirelessIP${wirelessIcon}</span></td></tr>"
 fi
 }
 
@@ -72,7 +89,7 @@ getWirelesstNetworkAndDisplayIp
 for i in $wiredDevice; do
 	displayEthernetIp $i
 done
-if [ ! -z "${wiredIP}" ];then
+if [ ! -z "${publicIP}" ];then
   echo "<tr><td><span class='green'>$iconWorld</span> Public IP</td><td><span class='green'>$publicIP</span></td></tr>"
 else
   echo "<tr><td><span class='red'>$iconWorld</span> Public IP</td><td><span class='red'>Unavailable</span></td></tr>"

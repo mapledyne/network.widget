@@ -6,7 +6,7 @@
 command: "network.widget/network.sh"
 
 # the refresh frequency in milliseconds
-refreshFrequency: 1800000
+refreshFrequency: 180000
 
 # render gets called after the shell command has executed. The command's output
 # is passed in as a string. Whatever it returns will get rendered as HTML.
@@ -29,38 +29,38 @@ style: """
     padding: 20px 20px 20px
     bottom: 0%
     left: 0%
-    width: 340px
+    width 340px
     text-align: justify
 
-  h1
-    font-size: 18px
-    font-weight: 300
-    margin: 16px 0 8px
+    h1
+        font-size: 150%
+        font-weight: 300
+        margin: 16px 0 8px
 
-  strong
-    background: #ad7a7c
-    color: #fff
-    display: block
-    font-size: 16px
-    font-style: italic
-    font-weight: 200
-    margin: 12px -20px
-    padding: 8px 20px
+    strong
+        background: #ad7a7c
+        color: #fff
+        display: block
+        font-size: 16px
+        font-style: italic
+        font-weight: 200
+        margin: 12px -20px
+        padding: 8px 20px
 
-  em
-    font-weight: 400
-    font-style: normal
+    em
+        font-weight: 400
+        font-style: normal
 
-  td
-    padding-right: 10px
+    td
+        padding-right: 10px
 
-  .green
-    color: #16fb13
+    .green
+        color: #16fb13
 
-  .red
-    color: #fc0000
+    .red
+        color: #fc0000
 
-  .blue
-    color: #5555ff
+    .blue
+        color: #5555ff
 
 """
