@@ -5,7 +5,7 @@
 
 # User assigned array.  List the ssid's you wish to consider "safe"
 # safeNetworksArray=("ssid_1" "ssid_2" "ssid_3")
-safeNetworksArray=("PoohCorner" "712-100")
+safeNetworksArray=("712-100" "BronteCreek")
 
 # fontawesome classes
 iconGood="<i class='fa fa-check-circle green'></i>"
@@ -39,7 +39,7 @@ displayWirelessInterface() {
 #
     # get current SSID - and check it against the array
     currentNetwork=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | awk -F: '/ SSID: / {print $2}' | sed -e 's/SSID: //' | sed -e 's/ //')
-    
+
     # no current network check to see if wifi card is off/inactive, or disconnected
     if [ -z "$currentNetwork" ]; then
         airportStatus=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | awk -F: '/AirPort: / {print $2}' | tr -d '[[:space:]]')
@@ -67,14 +67,14 @@ displayWirelessInterface() {
             fi
         fi
     fi
-    
+
 }
 
 displayWiredInterface() {
-#    
+#
     # display wired device information
     wiredIP=$(ipconfig getifaddr $1)
-    
+
     if [ ! -z "${wiredIP}" ];then
         echo "<tr><td>$iconGood Ethernet IP ($1)</td><td><span class='green'>$wiredIP</span>"
         if [ "$defaultRoute" == "$1" ]; then
@@ -105,11 +105,11 @@ mainDisplay() {
     for i in $wirelessDevice; do
         displayWirelessInterface $i
     done
-    
+
     for i in $wiredDevice; do
         displayWiredInterface $i
     done
-    
+
     displayPublicIP
 
     echo "</table>"
